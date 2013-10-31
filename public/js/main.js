@@ -2,10 +2,10 @@ var AppRouter = Backbone.Router.extend({
 
     routes: {
         ""                  : "home",
-        "wines"	: "list",
-        "wines/page/:page"	: "list",
-        "wines/add"         : "addWine",
-        "wines/:id"         : "wineDetails",
+        "videos"	        : "list",
+        "videos/page/:page"	: "list",
+        "videos/add"        : "addVideo",
+        "videos/:id"        : "videoDetails",
         "about"             : "about"
     },
 
@@ -24,24 +24,24 @@ var AppRouter = Backbone.Router.extend({
 
 	list: function(page) {
         var p = page ? parseInt(page, 10) : 1;
-        var wineList = new WineCollection();
-        wineList.fetch({success: function(){
-            $("#content").html(new WineListView({model: wineList, page: p}).el);
+        var videoList = new VideoCollection();
+        videoList.fetch({success: function(){
+            $("#content").html(new VideoListView({model: videoList, page: p}).el);
         }});
         this.headerView.selectMenuItem('home-menu');
     },
 
-    wineDetails: function (id) {
-        var wine = new Wine({_id: id});
-        wine.fetch({success: function(){
-            $("#content").html(new WineView({model: wine}).el);
+    videoDetails: function (id) {
+        var video = new Video({_id: id});
+        video.fetch({success: function(){
+            $("#content").html(new VideoView({model: video}).el);
         }});
         this.headerView.selectMenuItem();
     },
 
-	addWine: function() {
-        var wine = new Wine();
-        $('#content').html(new WineView({model: wine}).el);
+	addVideo: function() {
+        var video = new Video();
+        $('#content').html(new VideoView({model: video}).el);
         this.headerView.selectMenuItem('add-menu');
 	},
 
@@ -55,7 +55,7 @@ var AppRouter = Backbone.Router.extend({
 
 });
 
-utils.loadTemplate(['HomeView', 'HeaderView', 'WineView', 'WineListItemView', 'AboutView'], function() {
+utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'AboutView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });

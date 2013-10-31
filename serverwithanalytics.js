@@ -2,7 +2,7 @@ var express = require('express'),
     path = require('path'),
     http = require('http'),
     io = require('socket.io'),
-    wine = require('./routes/wines');
+    video = require('./routes/videos');
 
 var app = express();
 
@@ -31,11 +31,11 @@ server.listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });
 
-app.get('/wines', wine.findAll);
-app.get('/wines/:id', wine.findById);
-app.post('/wines', wine.addWine);
-app.put('/wines/:id', wine.updateWine);
-app.delete('/wines/:id', wine.deleteWine);
+app.get('/videos', video.findAll);
+app.get('/videos/:id', video.findById);
+app.post('/videos', video.addVide);
+app.put('/videos/:id', video.updateVideo);
+app.delete('/videos/:id', video.deleteVideo);
 
 io.sockets.on('connection', function (socket) {
 
