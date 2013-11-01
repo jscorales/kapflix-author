@@ -16,6 +16,7 @@ window.VideoView = Backbone.View.extend({
         "click .screen-size"        : "changeVideoPlayerSize",
         "click .add-hotspot"        : "addHotspot",
         "click .hotspot"            : "hotspotSelected",
+        "click .hotspot-list-item"  : "selectHotspot",
         "click .save"               : "beforeSave",
         "click .delete"             : "deleteVideo",
         "drop #picture"             : "dropHandler"
@@ -47,7 +48,7 @@ window.VideoView = Backbone.View.extend({
 
         var target = event.target;
         var shape = $(target).attr("data-hotspot-shape");
-        var hotspotId = this.model.attributes["hotspots"].length + 1;
+        var hotspotId = "hotspot-" + (this.model.attributes["hotspots"].length + 1);
         var hotspot = utils.getHotspotTemplate(shape, hotspotId);
 
         $(".video-player-container").append(hotspot.html);
@@ -60,6 +61,13 @@ window.VideoView = Backbone.View.extend({
             "height": hotspot.height,
             "width": hotspot.width
         });
+
+        $(".hotspot-list .nav-list li").removeClass("active");
+        $(".hotspot-list .nav-list").append('<li class="active" data-id="' + hotspotId + '"><a href="#" class="hotspot-list-item">' + $(target).text() +'</a></li>');
+
+        dragresize.select(document.getElementById(hotspotId));
+
+        $('.hotspot-list', this.el).append(new VideoHotspotView({model: this.model}).render().el);
     },
 
     hotspotSelected: function(event){
@@ -67,9 +75,25 @@ window.VideoView = Backbone.View.extend({
         if (!hotspotElem.hasClass("hotspot"))
             hotspotElem = $(hotspotElem.parent());
 
+        var hotspotElemId = hotspotElem.attr("id");
+
+        //select item in the list
+        $(".hotspot-list .nav-list li").removeClass("active");
+        $(".hotspot-list .nav-list li[data-id='" + hotspotElemId + "'").addClass("active");
+
         var hotspotProps = utils.getHotspotElemProps(hotspotElem);
 
         console.log(hotspotProps);
+    },
+
+    selectHotspot: function(event){
+        event.preventDefault();
+
+        $(".hotspot-list .nav-list li").removeClass("active");
+
+        var hotspotId = $(event.target).parent().addClass("active").attr("data-id");
+
+        dragresize.select(document.getElementById(hotspotId));
     },
 
     change: function (event) {
@@ -140,6 +164,22 @@ window.VideoView = Backbone.View.extend({
             $('#picture').attr('src', reader.result);
         };
         reader.readAsDataURL(this.pictureFile);
+    }
+
+});
+
+window.VideoHotspotView = Backbone.View.extend({
+
+    tagName: "li",
+
+    initialize: function () {
+        this.model.bind("change", this.render, this);
+        this.model.bind("destroy", this.close, this);
+    },
+
+    render: function () {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
     }
 
 });

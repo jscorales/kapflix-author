@@ -55,7 +55,7 @@ var AppRouter = Backbone.Router.extend({
 
 });
 
-utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'AboutView'], function() {
+utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'VideoHotspotView', 'AboutView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });

@@ -75,7 +75,7 @@ window.utils = {
         var videoPlayerOffset = this.getVideoPlayerOffset();
         var top = (($(".video-player").height() / 2) - (height / 2)) + videoPlayerOffset.top;
         var left = (($(".video-player").width() / 2) - (width / 2)) + videoPlayerOffset.left;
-        var html = '<div class="drsElement drsMoveHandle hotspot" data-id="' + id + '" data-link="" style="height:' + height + 'px;width:' + width + 'px;top:' + top + 'px;left:' + left + 'px"></div>';
+        var html = '<div class="drsElement drsMoveHandle hotspot" id="' + id + '" data-link="" style="height:' + height + 'px;width:' + width + 'px;top:' + top + 'px;left:' + left + 'px"></div>';
 
         result["height"] = height;
         result["width"] = width;
@@ -91,7 +91,7 @@ window.utils = {
         var elemOffset = $(hotspotElem).offset();
         var videoPlayerOffset = $(".video-player").offset();
 
-        result["id"] = $(hotspotElem).attr("data-id");
+        result["id"] = $(hotspotElem).attr("id");
         result["top"] = elemOffset.top - videoPlayerOffset.top;
         result["left"] = elemOffset.left - videoPlayerOffset.left;
         result["height"] = $(hotspotElem).height();
