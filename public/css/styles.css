@@ -123,3 +123,16 @@ legend {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+.row{
+    margin-left: 0;
+}
+
+.video-player{
+    background-color: #000;
+}
+
+.hotspot{
+    background-color: transparent;
+    border: 2px solid #fff;
+}

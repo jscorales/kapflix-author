@@ -48,6 +48,28 @@ window.utils = {
 
     hideAlert: function() {
         $('.alert').hide();
-    }
+    },
 
+    ensureDragDropContainmentArea: function(){
+        var videoPlayerOffset = this.getVideoPlayerOffset();
+
+        dragresize.minTop = videoPlayerOffset.top;
+        dragresize.minLeft = videoPlayerOffset.left;
+        dragresize.maxTop = videoPlayerOffset.top + $(".video-player").height();
+        dragresize.maxLeft = videoPlayerOffset.left + $(".video-player").width();
+    },
+
+    getVideoPlayerOffset: function(){
+        return $(".video-player").offset();
+    },
+
+    getHotspotTemplate: function(shape){
+        var height = 25;
+        var width = 50;
+        var videoPlayerOffset = this.getVideoPlayerOffset();
+        var top = (($(".video-player").height() / 2) - (height / 2)) + videoPlayerOffset.top;
+        var left = (($(".video-player").width() / 2) - (width / 2)) + videoPlayerOffset.left;
+
+        return '<div class="drsElement drsMoveHandle hotspot" style="height:' + height + 'px;width:' + width + 'px;top:' + top + 'px;left:' + left + 'px"></div>';
+    }
 };

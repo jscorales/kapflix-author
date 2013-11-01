@@ -10,10 +10,40 @@ window.VideoView = Backbone.View.extend({
     },
 
     events: {
-        "change"        : "change",
-        "click .save"   : "beforeSave",
-        "click .delete" : "deleteVideo",
-        "drop #picture" : "dropHandler"
+        "change"                    : "change",
+        "click .screen-size"        : "changeVideoPlayerSize",
+        "click .add-hotspot"        : "addHotspot",
+        "click .save"               : "beforeSave",
+        "click .delete"             : "deleteVideo",
+        "drop #picture"             : "dropHandler"
+    },
+
+    changeVideoPlayerSize: function (event) {
+        event.preventDefault();
+        
+        var target = event.target;
+        var screenSize = $(target).attr("data-screen-size");
+
+        switch (screenSize){
+            case "iphone3":
+                $(".video-player").height(300).width(480);
+                break;
+            case "iphone4":
+                $(".video-player").height(300).width(568);
+                break;
+        }
+    },
+
+    addHotspot: function(event){
+        event.preventDefault();
+
+        utils.ensureDragDropContainmentArea();
+        
+        var target = event.target;
+        var shape = $(target).attr("data-hotspot-shape");
+        var hotspotHtml = utils.getHotspotTemplate(shape);
+
+        $(".video-player-container").append(hotspotHtml);
     },
 
     change: function (event) {

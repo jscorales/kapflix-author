@@ -1,6 +1,41 @@
 <div class="row-fluid">
-    <div class="video-container">
-        
+    <div class="row">
+        <div class="span8 video-player-container">
+            <video class="video-player" style="height: 320px; width: 480px" controls>
+              <source src="videos/question1.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="span4">
+            <div class="btn-group">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Video Screen Size
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                    <a href="#" class="screen-size" data-screen-size="iphone3">iPhone 3.5 inch</a>
+                </li>
+                <li>
+                    <a href="#" class="screen-size" data-screen-size="iphone4">iPhone 4 inch</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="btn-group">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Add Hotspot
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                    <a href="#" class="add-hotspot" data-hotspot-shape="elliptical">Circle</a>
+                </li>
+                <li>
+                    <a href="#" class="add-hotspot" data-hotspot-shape="rectangular">Rectangle</a>
+                </li>
+              </ul>
+            </div>
+        </div>
     </div>
 </div>
 <!--
