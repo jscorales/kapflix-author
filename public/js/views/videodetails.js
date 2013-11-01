@@ -1,10 +1,12 @@
 window.VideoView = Backbone.View.extend({
 
     initialize: function () {
+        console.log("init");
         this.render();
     },
 
     render: function () {
+        console.log("render html");
         $(this.el).html(this.template(this.model.toJSON()));
         return this;
     },
@@ -13,6 +15,7 @@ window.VideoView = Backbone.View.extend({
         "change"                    : "change",
         "click .screen-size"        : "changeVideoPlayerSize",
         "click .add-hotspot"        : "addHotspot",
+        "click .hotspot"            : "hotspotSelected",
         "click .save"               : "beforeSave",
         "click .delete"             : "deleteVideo",
         "drop #picture"             : "dropHandler"
@@ -26,10 +29,12 @@ window.VideoView = Backbone.View.extend({
 
         switch (screenSize){
             case "iphone3":
-                $(".video-player").height(300).width(480);
+                $(".video-player-container").height(320).width(480);
+                $(".video-player").height(320).width(480);
                 break;
             case "iphone4":
-                $(".video-player").height(300).width(568);
+                $(".video-player-container").height(320).width(568);
+                $(".video-player").height(320).width(568);
                 break;
         }
     },
@@ -38,12 +43,33 @@ window.VideoView = Backbone.View.extend({
         event.preventDefault();
 
         utils.ensureDragDropContainmentArea();
-        
+
+
         var target = event.target;
         var shape = $(target).attr("data-hotspot-shape");
-        var hotspotHtml = utils.getHotspotTemplate(shape);
+        var hotspotId = this.model.attributes["hotspots"].length + 1;
+        var hotspot = utils.getHotspotTemplate(shape, hotspotId);
 
-        $(".video-player-container").append(hotspotHtml);
+        $(".video-player-container").append(hotspot.html);
+
+        this.model.attributes["hotspots"].push({
+            "id": hotspotId,
+            "link": "",
+            "top": hotspot.top,
+            "left": hotspot.left,
+            "height": hotspot.height,
+            "width": hotspot.width
+        });
+    },
+
+    hotspotSelected: function(event){
+        var hotspotElem = $(event.target);
+        if (!hotspotElem.hasClass("hotspot"))
+            hotspotElem = $(hotspotElem.parent());
+
+        var hotspotProps = utils.getHotspotElemProps(hotspotElem);
+
+        console.log(hotspotProps);
     },
 
     change: function (event) {

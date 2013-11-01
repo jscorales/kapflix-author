@@ -132,7 +132,28 @@ legend {
     background-color: #000;
 }
 
+.video-player-container{
+    margin: 0 auto;
+}
+
+.video-annotations{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.video-player-container, .video-annotations, .video-player{
+    height: 360px;
+    width: 640px;
+}
+
 .hotspot{
     background-color: transparent;
     border: 2px solid #fff;
+}
+
+.navbar-flag .brand{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
