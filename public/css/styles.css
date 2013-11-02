@@ -174,6 +174,15 @@ legend {
     -moz-border-radius: 0;
 }
 
+.hotspot-detail-body{
+    background-color: #f7f7f7;
+    padding: 15px;
+}
+
+.hotspot-detail-body form{
+    margin: 0;
+}
+
 input.hotspot-name{
     padding: 1px 4px;
     margin: 6px 0;
@@ -182,4 +191,13 @@ input.hotspot-name{
 .hotspot-delete-icon{
     float: right;
     margin-top: 7px;
+}
+
+.form-coordinates input{
+    width: 46px;
+    margin-right: 10px;
+}
+
+.hotspot-detail.active{
+    border: 2px solid #99cc66;
 }
