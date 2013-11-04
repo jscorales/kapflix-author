@@ -6,7 +6,9 @@ window.Hotspot = Backbone.Model.extend({
         left: 0,
         height: 0,
         width: 0,
-        link: ""
+        link: "",
+        startTime: "00:00:00",
+        endTime: "00:00:00"
     }
 });
 
@@ -27,6 +29,13 @@ window.Video = Backbone.Model.extend({
         this.validators.name = function (value) {
             return value.length > 0 ? {isValid: true} : {isValid: false, message: "You must enter a name"};
         };
+    },
+
+    set: function(attributes, options) {
+        var ret = Backbone.Model.prototype.set.call(this, attributes, options);
+        if (attributes.hotspots)
+            this.hotspots = nestCollection(this, 'hotspots', new Hotspots(this.get('hotspots')));
+        return ret;
     },
 
     validateItem: function (key) {

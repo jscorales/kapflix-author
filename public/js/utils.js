@@ -101,6 +101,24 @@ window.utils = {
         return result;
     },
 
+    createHotspotHtml: function(container, hotspotProp){
+        var id = hotspotProp.get("id");
+        var link = hotspotProp.get("link");
+        var top = hotspotProp.get("top");
+        var left = hotspotProp.get("left");
+        var width = hotspotProp.get("width");
+        var height = hotspotProp.get("height");
+
+        if (container){
+            var containerOffset = $(container).offset();
+
+            top += containerOffset.top;
+            left += containerOffset.left;
+        }
+
+        return '<div class="drsElement drsMoveHandle hotspot" id="' + id + '" data-link="' + link + '" style="top:' + top + 'px;left:' + left + 'px;height:' + height + 'px;width:' + width + 'px;"></div>';
+    },
+
     setHotspotElemProps: function(hotspotElem, hotspotProp){
         var videoPlayerOffset = $(".video-player").offset();
         var height = hotspotProp.height;

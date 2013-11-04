@@ -34,7 +34,9 @@ var AppRouter = Backbone.Router.extend({
     videoDetails: function (id) {
         var video = new Video({_id: id});
         video.fetch({success: function(){
-            $("#content").html(new VideoView({model: video}).el);
+            var videoView = new VideoView({model: video});
+            $("#content").html(videoView.el);
+            videoView.renderHotspots(video);
         }});
         this.headerView.selectMenuItem();
     },
@@ -55,7 +57,7 @@ var AppRouter = Backbone.Router.extend({
 
 });
 
-utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'VideoHotspotView', 'AboutView'], function() {
+utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'VideoHotspotView', 'VideoHotspotListView', 'AboutView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });

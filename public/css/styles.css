@@ -128,6 +128,43 @@ legend {
     margin-left: 0;
 }
 
+.hotspots-navbar{
+    margin-top: 10px;
+}
+
+.btn-success span{
+    margin-left: 10px;
+}
+
+.kapflix .add-hotspot{
+    padding: 9px !important;
+}
+
+.kapflix .add-hotspot span{
+    background: url('/img/hotspots.png') no-repeat 0 0;
+    text-indent: -10000px;
+    overflow: hidden;
+    display: block;
+    height: 22px;
+    width: 22px;
+}
+
+.kapflix .hotspot-rectangular span{
+    background-position: 0 0;
+}
+
+.kapflix .hotspot-elliptical span{
+    background-position: -38px 0;
+}
+
+.kapflix .hotspot-irregular span{
+    background-position: -80px 0;
+}
+
+.kapflix .divider-vertical{
+    margin: 0;
+}
+
 .hotspot-btn-group{
     margin-left: 0 !important;
 }
@@ -172,11 +209,23 @@ legend {
     border: 0 none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    -moz-border-top-left-radius: 8px;
+    -moz-border-top-right-radius: 8px;
 }
 
 .hotspot-detail-body{
     background-color: #f7f7f7;
     padding: 15px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    -moz-border-bottom-left-radius: 8px;
+    -moz-border-bottom-right-radius: 8px;
 }
 
 .hotspot-detail-body form{
@@ -193,11 +242,273 @@ input.hotspot-name{
     margin-top: 7px;
 }
 
-.form-coordinates input{
+.kapflix label{
+    margin-bottom: 0;
+}
+
+.kapflix .form-coordinates input{
     width: 46px;
     margin-right: 10px;
 }
 
-.hotspot-detail.active{
+.kapflix .hotspot-detail{
+    border: 2px solid #fff;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.kapflix .hotspot-detail.active{
     border: 2px solid #99cc66;
+}
+
+.kapflix .time-picker{
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.kapflix .time-picker input{
+    float: left;
+}
+
+.kapflix .time-picker .input-small{
+    width: 117px;
+}
+
+.kapflix .spinner-buttons{
+    position: relative;
+    left: -22px;
+    float: left;
+    width: 20px;
+    height: 28px;
+}
+
+.kapflix .time-picker .btn{
+    position: relative;
+    width: 20px;
+    height: 14px;
+    padding-top: 0;
+    padding-right: 9px;
+    padding-left: 9px;
+}
+
+.kapflix .time-picker .spinner-up i {
+    position: relative;
+    top: -4px;
+}
+
+.kapflix .time-picker .spinner-down i {
+    position: relative;
+    top: -5px;
+}
+
+.kapflix .time-picker .spinner-up {
+    top: 2px;
+    padding: 0 0 4px 1px;
+}
+
+.kapflix .time-picker .spinner-down{
+    top: 2px;
+    height: 13px;
+    padding: 0 0 4px 1px;
+}
+
+.kapflix .btn-group-vertical > .btn + .btn{
+    margin-top: -1px;
+    margin-left: 0;
+}
+
+.kapflix .btn-group-vertical > .btn {
+    display: block;
+    float: none;
+    max-width: 100%;
+}
+
+.kapflix-video-controls{
+    position: relative;
+    float: left;
+    clear: both;
+    width: 100%;
+    line-height: 2em;
+    background-color: #ebebeb;
+    border-radius: 14px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+}
+
+.kapflix-video-play, 
+.kapflix-video-seek, 
+.kapflix-volume-box, 
+.kapflix-video-timer {
+    float: left;
+}
+
+.kapflix-video-play:hover {
+    opacity: 1;
+}
+
+.kapflix-video-play{
+    display: block;
+    width: 21px;
+    height: 21px;
+    border-radius: 12px;
+    margin: 3px 16px 0 6px;
+    background: #656565 url('/img/glyphicons-halflings-white.png') no-repeat -260px -69px;
+    cursor: pointer;
+}
+
+.kapflix-video-play.kapflix-paused-button{
+    background-position: -284px -69px;
+}
+
+.kapflix-video-seek{
+    position: relative;
+    width: 470px;
+    height: 5px;
+    margin-top: 11px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    background: #656565;
+}
+
+.kapflix-video-seek .ui-slider-range{
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    background: #88be51;
+}
+
+.kapflix-video-seek .ui-slider-handle{
+    width: 12px;
+    height: 12px;
+    border: 1px solid #656565;
+    top: -4px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #656565;
+    cursor: pointer;
+}
+
+.ui-slider-range {
+    display: block;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    border: 0 none;
+    position: absolute;
+    z-index: 1;
+}
+
+.ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    margin-left: -0.6em;
+    cursor: default;
+    outline: none;
+}
+
+.kapflix-video-timer {
+    margin-left: 10px;
+    color: #656565;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.kapflix-volume-box {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    overflow: hidden;
+    width: 20px;
+    height: 30px;
+    color: #fff;
+    padding: 0px 10px;
+    -moz-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.kapflix-volume-slider {
+    position: relative;
+    height: 100px;
+    width: 5px;
+    left: 5px;
+    visiblity: hidden;
+    opacity: 0;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    background: #656565;
+    -moz-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.kapflix-volume-slider .ui-slider-range{
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    background: #88be51;
+}
+
+.kapflix-volume-slider .ui-slider-handle {
+    width: 12px;
+    height: 12px;
+    left: -4px;
+    margin-bottom: -0.65em;
+    margin-left: 0;
+    border: 1px solid #656565;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #656565;
+    cursor: pointer;
+}
+
+.kapflix-volume-button {
+    position: absolute;
+    bottom: 3px;
+    display: block;
+    width: 21px;
+    height: 21px;
+    background: url('/img/glyphicons-halflings-656565.png') no-repeat -404px -21px;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+
+.kapflix-volume-button.kapflix-volume-mute{
+    background-position: -356px -21px;
+}
+
+.kapflix-volume-box:hover {
+    height: 135px;
+    padding-top: 16px;
+}
+
+.kapflix-volume-box:hover .kapflix-volume-slider {
+    opacity: 1;
+    position: relative;
+    visibility: visible;
+}
+
+.kapflix-volume-slider-back{
+    position: absolute;
+    height: 120px;
+    width: 20px;
+    top: 5px;
+    left: 8px;
+    background-color: #ebebeb;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    -moz-border-top-left-radius: 9px;
+    -moz-border-top-right-radius: 9px;
+    -webkit-border-top-left-radius: 9px;
+    -webkit-border-top-right-radius: 9px;
 }

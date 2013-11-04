@@ -1,0 +1,54 @@
+<div class="hotspot-detail" data-id="<%= id %>">
+	<div class="hotspot-detail-header navbar-inner">
+		<input type="text" class="hotspot-name" value="<%= name %>"></input>
+		<a href="#" title="Delete Hotspot" class="hotspot-delete-icon" data-id="<%= id %>"><i class="icon-trash"></i></a>
+	</div>
+	<div class="hotspot-detail-body">
+		<form>
+			<div class="label-container">
+				<label for="hotspot-link">Link</label>
+			</div>
+			<input type="text" name="hotspot-link" class="hotspot-link input-xlarge" value="<%= link %>" />
+		</form>
+		<form class="form-inline form-coordinates">
+			<div class="label-container">
+				<label>Coordinates</label>
+			</div>
+			<input type="text" class="input-small" value="<%= width %>" />
+			<input type="text" class="input-small" value="<%= height %>" />
+			<input type="text" class="input-small" value="<%= left %>" />
+			<input type="text" class="input-small" value="<%= top %>" />
+		</form>
+		<form class="form-inline form-times">
+			<div class="time-picker">
+				<div class="label-container">
+					<label for="time-picker-start">Start</label>
+				</div>
+				<input type="text" name="time-picker-start" class="time-picker-input input-small" maxlength="8" value="<%= startTime %>"/>
+				<div class="spinner-buttons	 btn-group btn-group-vertical">
+					<button type="button" class="btn spinner-up">
+						<i class="icon-chevron-up"></i>
+					</button>
+					<button type="button" class="btn spinner-down">
+						<i class="icon-chevron-down"></i>
+					</button>
+				</div>
+			</div>
+			<div class="time-picker">
+				<div class="label-container">
+					<label for="time-picker-end">End</label>
+				</div>
+				<input type="text" name="time-picker-end" class="time-picker-input input-small" maxlength="8" value="<%= endTime %>" />
+				<div class="spinner-buttons	 btn-group btn-group-vertical">
+					<button type="button" class="btn spinner-up">
+						<i class="icon-chevron-up"></i>
+					</button>
+					<button type="button" class="btn spinner-down">
+						<i class="icon-chevron-down"></i>
+					</button>
+				</div>
+			</div>
+			<br class="clearfix"/>
+		</form>
+	</div>
+</div>

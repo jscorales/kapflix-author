@@ -1,29 +1,55 @@
+//
+//TODO: Load hotspots from the server db
+//
+
 window.VideoView = Backbone.View.extend({
     self: this,
 
     initialize: function () {
         //this.model.on("change", this.render, this);
-        this.model.hotspots.on("add", this.renderHotspots, this);
-        this.model.hotspots.on("remove", this.renderHotspots, this);
+        this.model.hotspots.on("add", this.renderHotspotList, this);
+        this.model.hotspots.on("remove", this.renderHotspotList, this);
+        this.model.hotspots.on("change", this.renderHotspotList, this);
         this.render();
     },
 
     render: function () {
+        var self = this;
         $(this.el).html(this.template(this.model.toJSON()));
 
-        this.renderHotspots();
+        $(".video-player", this.el).videoPlayer();
+
+        var hotspots = this.model.get("hotspots");
+        if (hotspots.length > 0){
+            this.renderHotspotList();
+        }
 
         return this;
     },
 
+    //$("#cnvRs").val( parseInt($("#cnvHr").val()*3600000) + parseInt($("#cnvMn").val()*60000) + parseInt($("#cnvSc").val()*1000) );
+    
     renderHotspots: function(){
+
+        var hotspots = this.model.hotspots.models;
+        var len = hotspots.length;
+
+        $(".video-player-container .hotspot").remove();
+
+        for (var i = 0; i < len; i++){
+            var html = utils.createHotspotHtml($(".video-player-container", this.el), hotspots[i]);
+            $(".video-player-container", this.el).append(html);
+        }
+    },
+
+    renderHotspotList: function(){
         var hotspots = this.model.hotspots.models;
         var len = hotspots.length;
 
         $(".hotspot-list").html("");
 
         for (var i = 0; i < len; i++){
-            $(".hotspot-list").append(new VideoHotspotView({model: hotspots[i]}).render().el);
+            $(".hotspot-list", this.el).append(new VideoHotspotListView({model: hotspots[i]}).render().el);
         }
 
         return this;
@@ -32,12 +58,18 @@ window.VideoView = Backbone.View.extend({
     events: {
         "change"                        : "change",
         "click .screen-size"            : "changeVideoPlayerSize",
+        "mousedown .add-hotspot"        : "addHotspotMouseDown",
+        "mouseup .add-hotspot"          : "addHotspotMouseUp",
         "click .add-hotspot"            : "addHotspot",
         "mousedown .hotspot"            : "hotspotSelected",
         "click .hotspot"                : "hotspotSelected",
+        "click .hotspot-detail"         : "hotspotDetailSelected",
         "click .hotspot-list-item"      : "selectHotspot",
         "click .hotspot-delete-icon"    : "deleteHotspot",
-        "click .save"                   : "beforeSave",
+        "change .hotspot-link"          : "hotspotLinkChanged",
+        "change .hotspot-name"          : "hotspotNameChanged",
+        "change .time-picker-input"     : "hotspotTimeChanged",
+        "click .btn-save"               : "beforeSave",
         "click .delete"                 : "deleteVideo",
         "drop #picture"                 : "dropHandler"
     },
@@ -60,13 +92,27 @@ window.VideoView = Backbone.View.extend({
         }
     },
 
+    addHotspotMouseDown: function(event){
+        $("li.divider-vertical").removeClass("active");
+        $(event.currentTarget).parent().addClass("active");
+    },
+
+    addHotspotMouseUp: function(event){
+        $("li.divider-vertical").removeClass("active");
+    },
+
     addHotspot: function(event){
         event.preventDefault();
 
         utils.ensureDragDropContainmentArea();
 
-        var target = event.target;
+        var target = event.currentTarget;
         var shape = $(target).attr("data-hotspot-shape");
+        if (shape !== "rectangular"){
+            alert($(target).attr("title") + " hotspot is not yet supported.");
+            return;
+        }
+
         var hotspotId = "hotspot-" + (this.model.hotspots.length + 1);
         var hotspot = utils.getHotspotTemplate(shape, hotspotId);
         
@@ -76,7 +122,8 @@ window.VideoView = Backbone.View.extend({
 
         hotspots.add({
             id: hotspotId,
-            link: "link",
+            name: hotspotId,
+            link: "",
             top: hotspot.top,
             left: hotspot.left,
             height: hotspot.height,
@@ -84,6 +131,8 @@ window.VideoView = Backbone.View.extend({
         });
 
         dragresize.select(document.getElementById(hotspotId));
+
+        //this.renderHotspotList();
 
         //select item in the list
         $(".hotspot-detail").removeClass("active");
@@ -106,15 +155,35 @@ window.VideoView = Backbone.View.extend({
         if (!hotspotElem.hasClass("hotspot"))
             hotspotElem = $(hotspotElem.parent());
 
-        var hotspotElemId = hotspotElem.attr("id");
+        var hotspotId = hotspotElem.attr("id");
+
+        var hotspotProps = utils.getHotspotElemProps(hotspotElem);
+        var hotspot = this.model.hotspots.get(hotspotId);
+
+        if (hotspot.top != hotspotProps.top &&
+            hotspot.left != hotspotProps.left &&
+            hotspot.width != hotspotProps.width &&
+            hotspot.height != hotspotProps.height){
+            hotspot.set("top", hotspotProps.top);
+            hotspot.set("left", hotspotProps.left);
+            hotspot.set("width", hotspotProps.width);
+            hotspot.set("height", hotspotProps.height);
+
+            this.renderHotspotList();
+        }
 
         //select item in the list
         $(".hotspot-detail").removeClass("active");
-        $(".hotspot-detail[data-id='" + hotspotElemId + "'").addClass("active");
+        $(".hotspot-detail[data-id='" + hotspotId + "'").addClass("active");
+    },
 
-        var hotspotProps = utils.getHotspotElemProps(hotspotElem);
+    hotspotDetailSelected: function(event){
+        var hotspotId = $(event.currentTarget).attr("data-id");
 
-        console.log(hotspotProps);
+        dragresize.select(document.getElementById(hotspotId));
+
+        $(".hotspot-detail").removeClass("active");
+        $(event.currentTarget).addClass("active");
     },
 
     selectHotspot: function(event){
@@ -127,7 +196,50 @@ window.VideoView = Backbone.View.extend({
         dragresize.select(document.getElementById(hotspotId));
     },
 
-    
+    hotspotNameChanged: function(event){
+        var link = $(event.currentTarget);
+        var hotspotId = link.parents(".hotspot-detail").attr("data-id");
+
+        if (!hotspotId || hotspotId == '')
+            return;
+
+        var hotspot = this.model.hotspots.get(hotspotId);
+        if (hotspot && hotspot.get("name") != link.val()){
+            hotspot.set("name", link.val());
+        }
+    },
+
+    hotspotLinkChanged: function(event){
+        var link = $(event.currentTarget);
+        var hotspotId = link.parents(".hotspot-detail").attr("data-id");
+
+        if (!hotspotId || hotspotId == '')
+            return;
+
+        var hotspot = this.model.hotspots.get(hotspotId);
+        if (hotspot && hotspot.get("link") != link.val()){
+            hotspot.set("link", link.val());
+        }
+    },
+
+    hotspotTimeChanged: function(event){
+        var time = $(event.currentTarget);
+        var timeNameAttr = time.attr("name");
+        var timeType = timeNameAttr.indexOf("start") >= 0 ? "startTime" : (timeNameAttr.indexOf("end") >= 0 ? "endTime" : "");
+        
+        if (timeType == "")
+            return;
+
+        var hotspotId = time.parents(".hotspot-detail").attr("data-id");
+
+        if (!hotspotId || hotspotId == '')
+            return;
+
+        var hotspot = this.model.hotspots.get(hotspotId);
+        if (hotspot && hotspot.get(timeType) != time.val()){
+            hotspot.set(timeType, time.val());
+        }
+    },
 
     change: function (event) {
         // Remove any existing alert message
@@ -202,6 +314,28 @@ window.VideoView = Backbone.View.extend({
 });
 
 window.VideoHotspotView = Backbone.View.extend({
+    
+    initialize: function(){
+        var template = _.template('<div class="drsElement drsMoveHandle hotspot" id="<%= id %>" data-link="<%= link %>" style="top:<%= top %>px;left:<%= left %>px;height:<%= height %>px;width:<%= width %>px;"></div>');
+        var html = template({
+            id: this.model.get("id"),
+            link: this.model.get("link"),
+            top: this.model.get("top"),
+            left: this.model.get("left"),
+            height: this.model.get("height"),
+            width: this.model.get("width")
+        });
+        this.setElement(html);
+    },
+
+    //render: function(){
+    //    $(this.el).html(this.template(this.model.toJSON()));
+
+    //    return this;
+    //}
+});
+
+window.VideoHotspotListView = Backbone.View.extend({
 
     tagName: "li",
 
@@ -211,6 +345,8 @@ window.VideoHotspotView = Backbone.View.extend({
 
     render: function () {
         $(this.el).html(this.template(this.model.toJSON()));
+
+        $(".time-picker", this.el).timepicker();
         return this;
     }
 });

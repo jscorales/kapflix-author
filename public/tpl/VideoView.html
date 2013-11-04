@@ -3,16 +3,21 @@
         <div class="span8">
             <div class="video-player-section">
                 <div class="video-player-container">
-                    <video class="video-player" controls>
+                    <video class="video-player">
                         <source src="videos/Question1.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
+
             <div class="video-properties">
 
             </div>
         </div>
         <div class="span4">
+            <div class="action-buttons">
+                <a href="#" class="btn btn-success btn-save"><i class="icon-film icon-white"></i><span>Save<span></a>
+            </div>
+
             <div class="btn-group" style="display: none;">
               <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                 Video Screen Size
@@ -28,43 +33,32 @@
               </ul>
             </div>
 
-            <div class="btn-group hotspot-btn-group">
-                <button class="btn dropdown-toggle" data-toggle="dropdown">Add Hotspot <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" class="add-hotspot" data-hotspot-shape="rectangular">Rectangular</a></li>
-                  <li><a href="#" class="add-hotspot" data-hotspot-shape="elliptical">Elliptical</a></li>
-                </ul>
+            <div class="navbar hotspots-navbar">
+                <div class="navbar-inner navbar-flag">
+                    <a class="brand" href="#">Add Hotspot</a>
+                    <ul class="nav">
+                        <li class="divider-vertical">
+                            <a href="#" title="Rectangular" class="add-hotspot hotspot-rectangular" data-hotspot-shape="rectangular">
+                                <span>Rectangular</span>
+                            </a>
+                        </li>
+                        <li class="divider-vertical">
+                            <a href="#" title="Elliptical" class="add-hotspot hotspot-elliptical disabled" data-hotspot-shape="elliptical">
+                                <span>Elliptical</span>
+                            </a>
+                        </li>
+                        <li class="divider-vertical">
+                            <a href="#" title="Irregular" class="add-hotspot hotspot-irregular disabled" data-hotspot-shape="irregular">
+                                <span>Irregular</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <div class="hotspot-list-container">
                 <ul class="hotspot-list nav"></ul>            
             </div>
-
-            
-            <!--
-            <div class="well hotspot-list" style="max-width: 340px; padding: 8px 0;">
-              <ul class="nav nav-list">
-                <li class="nav-header">Hotspots</li>
-                
-              </ul>
-            </div>
-            <div class="navbar">
-                <div class="navbar-inner navbar-flag">
-                    <a class="brand" href="#">Add Hotspot</a>
-                    <ul class="nav">
-                        <li class="divider-vertical">
-                            <a href="#" title="Rectangular" class="add-hotspot" data-hotspot-shape="rectangular"></a>
-                        </li>
-                        <li class="divider-vertical">
-                            <a href="#" title="Elliptical" class="add-hotspot" data-hotspot-shape="elliptical"></a>
-                        </li>
-                        <li class="divider-vertical">
-                            <a href="#" title="Irregular" class="add-hotspot" data-hotspot-shape="irregular"></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            -->
         </div>
     </div>
 </div>
