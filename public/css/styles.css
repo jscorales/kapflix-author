@@ -512,3 +512,17 @@ input.hotspot-name{
     -webkit-border-top-left-radius: 9px;
     -webkit-border-top-right-radius: 9px;
 }
+
+.kapflix .video-properties{
+    width: 640px;
+    margin: 45px auto; 
+    margin-bottom: 10px;
+}
+
+.kapflix .video-properties-row{
+    margin-bottom: 2px;
+}
+
+.kapflix .video-properties .video-name{
+    font-weight: bold;
+}

@@ -129,5 +129,11 @@ window.utils = {
         var id = hotspotProp.id;
 
         $(hotspotElem).height(height).width(width).css("left", left + "px").css("top", top + "px").attr("data-id", id).attr("data-link", link);
+    },
+
+    formatTime: function(seconds){
+        var m=Math.floor(seconds/60)<10?"0"+Math.floor(seconds/60):Math.floor(seconds/60);
+        var s=Math.floor(seconds-(m*60))<10?"0"+Math.floor(seconds-(m*60)):Math.floor(seconds-(m*60));
+        return m+":"+s;
     }
 };

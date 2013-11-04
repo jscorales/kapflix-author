@@ -4,13 +4,21 @@
             <div class="video-player-section">
                 <div class="video-player-container">
                     <video class="video-player">
-                        <source src="videos/Question1.mp4" type="video/mp4">
+                        <source src="videos/<%= fileName %>" type="video/mp4">
                     </video>
                 </div>
-            </div>
-
-            <div class="video-properties">
-
+                <div class="video-properties">
+                    <div class="video-properties-row">
+                        <span class="video-name"></span>
+                    </div>
+                    <div class="video-properties-row">
+                        <span>Duration: </span><span class="video-duration"></span>
+                    </div>
+                    <div class="video-properties-row">
+                        <span>Resolution: </span><span class="video-resolution"></span>
+                    </div>
+                    <br class="clearfix"/>
+                </div>
             </div>
         </div>
         <div class="span4">

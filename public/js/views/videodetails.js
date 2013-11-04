@@ -18,6 +18,12 @@ window.VideoView = Backbone.View.extend({
         $(this.el).html(this.template(this.model.toJSON()));
 
         $(".video-player", this.el).videoPlayer();
+        var videoPlayerElem = $(".video-player", this.el)[0];
+        if (videoPlayerElem){
+            videoPlayerElem.addEventListener("loadeddata", function(){
+                self.renderVideoProperties();
+            });
+        }
 
         var hotspots = this.model.get("hotspots");
         if (hotspots.length > 0){
@@ -29,6 +35,16 @@ window.VideoView = Backbone.View.extend({
 
     //$("#cnvRs").val( parseInt($("#cnvHr").val()*3600000) + parseInt($("#cnvMn").val()*60000) + parseInt($("#cnvSc").val()*1000) );
     
+    renderVideoProperties: function(){
+        var videoPlayerElem = $(".video-player")[0];
+
+        var videoSrc = videoPlayerElem.currentSrc;
+        videoSrc = videoSrc.substr(videoSrc.lastIndexOf('/') + 1);
+        $(".video-name").text(videoSrc);
+        $(".video-duration").text(utils.formatTime(videoPlayerElem.duration));
+        $(".video-resolution").text(videoPlayerElem.videoWidth + "x" + videoPlayerElem.videoHeight);
+    },
+
     renderHotspots: function(){
 
         var hotspots = this.model.hotspots.models;
