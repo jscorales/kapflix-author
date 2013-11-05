@@ -1,7 +1,7 @@
-utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'VideoHotspotView', 'AboutView'], function() {
-    app = new AppRouter();
-    Backbone.history.start();
-});
+// utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'VideoHotspotView', 'AboutView'], function() {
+//     app = new AppRouter();
+//     Backbone.history.start();
+// });
 
 var BaseRouter = Backbone.Router.extend({
       before: function(){},
@@ -144,6 +144,8 @@ var AppRouter = Backbone.Router.extend({
 
 utils.loadTemplate(['HomeView', 'HeaderView', 'VideoView', 'VideoListItemView', 'VideoHotspotView', 'VideoHotspotListView', 'AboutView'], function() {
     app = new AppRouter();
+    app.authenticated = false;
+    app.vent = _.extend({}, Backbone.Events);
     Backbone.history.start();
 });
 

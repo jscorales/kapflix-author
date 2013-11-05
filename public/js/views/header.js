@@ -17,11 +17,42 @@ window.HeaderView = Backbone.View.extend({
     },
 
     events: {
-        "click #loginButton": "login"
+        "click #loginButton": "login",
+        "click #signOut" : "signOut"
+    },
+
+    signOut: function(event){
+        debugger;
+        this.$el.find("#loginForm").show();
+        this.$el.find("#menu").hide();
+        this.$el.find("#resources").hide();
+        app.authenticated = false;
+
+    },
+    hideLogin: function(event){
+        alert("Rama");
+        debgger;
+        // if(App.authenticated)
+        //     this.$el.find("#loginForm").show();
+        // else
+        //     this.$el.find("#loginForm").hide();
     },
 
     login:function (event) {
         event.preventDefault(); // Don't let this button submit the form
+        app.vent.trigger('some_event');
+        app.authenticated = true;
+        if(app.authenticated){
+            this.$el.find("#loginForm").hide();
+            this.$el.find("#menu").show();
+            this.$el.find("#resources").show();
+        }
+        else{
+            this.$el.find("#loginForm").show();
+            this.$el.find("#menu").hide();
+            this.$el.find("#resources").hide();
+        }
+
         window.location.replace('#videos');
 
         //TODO: Implemet LDAP Authentication later
@@ -53,3 +84,4 @@ window.HeaderView = Backbone.View.extend({
     }
 
 });
+//window.app.vent.on('some_event', window.HeaderView.hideLogin);
