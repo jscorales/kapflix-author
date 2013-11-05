@@ -136,6 +136,10 @@ legend {
     margin-left: 10px;
 }
 
+.kapflix .input-btn{
+    margin-bottom: 9px;
+}
+
 .kapflix .add-hotspot{
     padding: 9px !important;
 }
@@ -252,7 +256,7 @@ input.hotspot-name{
 }
 
 .kapflix .hotspot-detail{
-    border: 2px solid #fff;
+    border: 2px solid #f7f7f7;
     margin-bottom: 10px;
     border-radius: 8px;
     -webkit-border-radius: 8px;
@@ -525,4 +529,8 @@ input.hotspot-name{
 
 .kapflix .video-properties .video-name{
     font-weight: bold;
+}
+
+.kapflix .modal.fade.in {
+    top: 60%;
 }

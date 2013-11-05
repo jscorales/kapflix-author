@@ -1,7 +1,3 @@
-//
-//TODO: Load hotspots from the server db
-//
-
 window.VideoView = Backbone.View.extend({
     self: this,
 
@@ -9,7 +5,7 @@ window.VideoView = Backbone.View.extend({
         //this.model.on("change", this.render, this);
         this.model.hotspots.on("add", this.renderHotspotList, this);
         this.model.hotspots.on("remove", this.renderHotspotList, this);
-        this.model.hotspots.on("change", this.renderHotspotList, this);
+        //this.model.hotspots.on("change", this.renderHotspotList, this);
         this.render();
     },
 
@@ -82,6 +78,8 @@ window.VideoView = Backbone.View.extend({
         "click .hotspot-detail"         : "hotspotDetailSelected",
         "click .hotspot-list-item"      : "selectHotspot",
         "click .hotspot-delete-icon"    : "deleteHotspot",
+        "click .browse-cancel-btn"      : "browseDialogCanceled",
+        "click .browse-ok-btn"          : "browseDialogCanceled",
         "change .hotspot-link"          : "hotspotLinkChanged",
         "change .hotspot-name"          : "hotspotNameChanged",
         "change .time-picker-input"     : "hotspotTimeChanged",
@@ -257,6 +255,10 @@ window.VideoView = Backbone.View.extend({
         }
     },
 
+    browseDialogCanceled: function(event){
+        $("#browseVideoModal").modal("hide");
+    },
+
     change: function (event) {
         // Remove any existing alert message
         utils.hideAlert();
@@ -292,8 +294,8 @@ window.VideoView = Backbone.View.extend({
         console.log('before save');
         this.model.save(null, {
             success: function (model) {
-                self.render();
-                app.navigate('videos/' + model.id, false);
+                //self.render();
+                //app.navigate('videos/' + model.id, false);
                 utils.showAlert('Success!', 'Video saved successfully', 'alert-success');
             },
             error: function () {
