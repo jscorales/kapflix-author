@@ -21,6 +21,38 @@ db.open(function(err, db) {
 
 exports.findById = function(req, res) {
     var id = req.params.id;
+    var _id = null;
+
+    try{
+        _id = new BSON.ObjectID(id);
+    }
+    catch(e){
+
+    }
+
+    if (_id == null){
+        console.log('Retrieving video by filename: ' + id);
+        db.collection('videos', function(err, collection) {
+            collection.findOne({'fileName':(id + '.mp4')}, function(err, item) {
+                if (item == null)
+                    res.send(404);
+                else
+                    res.send(item);
+            });
+        });
+    }
+    else{
+        console.log('Retrieving video: ' + id);
+        db.collection('videos', function(err, collection) {
+            collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+                res.send(item);
+            });
+        });
+    }
+};
+
+exports.findByName = function(req, res) {
+    var name = req.params.id;
     console.log('Retrieving video: ' + id);
     db.collection('videos', function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
@@ -50,7 +82,7 @@ exports.addVideo = function(req, res) {
             }
         });
     });
-}
+};
 
 exports.updateVideo = function(req, res) {
     var id = req.params.id;
@@ -69,7 +101,7 @@ exports.updateVideo = function(req, res) {
             }
         });
     });
-}
+};
 
 exports.deleteVideo = function(req, res) {
     var id = req.params.id;
@@ -84,7 +116,7 @@ exports.deleteVideo = function(req, res) {
             }
         });
     });
-}
+};
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
@@ -93,33 +125,33 @@ var populateDB = function() {
 
     var videos = [
     {
-        name: "Question 001",
+        name: "question1",
         fileName: "question1.mp4",
-        thumbnail: "saint_cosme.jpg",
+        thumbnail: "question1.jpg",
         hotspots: []
     },
     {
-        name: "Question 001 Hint",
+        name: "question1-hint",
         fileName: "question1-hint.mp4",
-        thumbnail: "saint_cosme.jpg",
+        thumbnail: "question1-hint.jpg",
         hotspots: []
     },
     {
-        name: "Question 001 Answer Choice A",
+        name: "question1-choice-a",
         fileName: "question1-choice-a.mp4",
-        thumbnail: "saint_cosme.jpg",
+        thumbnail: "question1-choice-a.jpg",
         hotspots: []
     },
     {
-        name: "Question 001 Answer Choice B",
+        name: "question1-choice-b",
         fileName: "question1-choice-b.mp4",
-        thumbnail: "saint_cosme.jpg",
+        thumbnail: "question1-choice-b.jpg",
         hotspots: []
     },
     {
-        name: "Question 001 Answer Choice C",
+        name: "question1-choice-c",
         fileName: "question1-choice-c.mp4",
-        thumbnail: "saint_cosme.jpg",
+        thumbnail: "question1-choice-c.jpg",
         hotspots: []
     }];
 

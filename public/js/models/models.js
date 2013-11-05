@@ -168,7 +168,7 @@ window.Video = Backbone.Model.extend({
 
     set: function(attributes, options) {
         var ret = Backbone.Model.prototype.set.call(this, attributes, options);
-        if (attributes.hotspots)
+        if (attributes && attributes.hotspots)
             this.hotspots = nestCollection(this, 'hotspots', new Hotspots(this.get('hotspots')));
         return ret;
     },
@@ -198,7 +198,7 @@ window.Video = Backbone.Model.extend({
         _id: null,
         name: "",
         fileName: "",
-        picture: null,
+        thumbnail: "",
         hotspots: []
     }
 });
@@ -209,6 +209,12 @@ window.VideoCollection = Backbone.Collection.extend({
 
     url: "/videos"
 
+});
+
+window.Library = Backbone.Collection.extend({
+    model: Video,
+
+    url: "/library/browse"
 });
 
 function nestCollection(model, attributeName, nestedCollection) {

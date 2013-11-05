@@ -27,6 +27,9 @@
 			$videoPlayerControls.hide();
 						
 			var play = function() {
+				if (typeof($videoPlayer) == 'undefined')
+					return;
+
 				if($videoPlayer[0]['paused'] == false) {
 					$videoPlayer[0].pause();					
 				} else {					

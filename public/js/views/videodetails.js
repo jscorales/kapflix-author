@@ -1,6 +1,9 @@
 window.VideoView = Backbone.View.extend({
     self: this,
 
+    browseType: '', //link or video
+    targetLink: null,
+
     initialize: function () {
         //this.model.on("change", this.render, this);
         this.model.hotspots.on("add", this.renderHotspotList, this);
@@ -83,6 +86,10 @@ window.VideoView = Backbone.View.extend({
         "change .hotspot-link"          : "hotspotLinkChanged",
         "change .hotspot-name"          : "hotspotNameChanged",
         "change .time-picker-input"     : "hotspotTimeChanged",
+        "click  .add-video"             : "addVideo",
+        "click .btn-load-video"         : "addVideo",
+        "click  a.thumbnail"            : "videoSelected",
+        "click .link-browse"            : "browseLink",
         "click .btn-save"               : "beforeSave",
         "click .delete"                 : "deleteVideo",
         "drop #picture"                 : "dropHandler"
@@ -259,6 +266,85 @@ window.VideoView = Backbone.View.extend({
         $("#browseVideoModal").modal("hide");
     },
 
+    showBrowseVideo: function(){
+        var library = new Library();
+        library.fetch({success: function(){
+            $('.modal-body').html('<ul class="thumbnails"></ul>');
+            var videos = library.models;
+            for (var i = 0; i < videos.length; i++){
+              $('.modal-body .thumbnails').append(new VideoListItemView({model: videos[i]}).render().el);  
+            }
+            
+            $('a.thumbnail').attr('href', '#');
+            $('.thumbnail img').height(32).width(32);
+            $('#browseVideoModal').modal('show');
+        }});
+    },
+
+    addVideo: function(event){
+        event.preventDefault();
+
+        this.browseType = "video";
+        this.targetLink = null;
+
+        this.showBrowseVideo();
+    },
+
+    browseLink: function(event){
+        event.preventDefault();
+        var target = $(event.currentTarget);
+
+        this.browseType = "link";
+        this.targetLink = target.parent().find('.hotspot-link');
+        
+        this.showBrowseVideo();
+    },
+
+    videoSelected: function(event){
+        $('#browseVideoModal').modal('hide');
+
+        event.preventDefault();
+
+        var target = $(event.currentTarget);
+
+        var videoName = target.find('.video-data .video-name').text();
+        var videoFilename = target.find('.video-data .video-filename').text();
+        var videoThumbnail = target.find('.video-data .video-thumbnail').text();
+
+        if (this.browseType == "video"){
+            var video = new Video({'_id': videoName});
+            video.fetch({success: function(){
+                app.navigate('/videos/' + videoName, {trigger: true});
+            },
+            error: function(model, res, options){
+                if (res.status == 404){
+                    var video = new Video({name: videoName, fileName: videoFilename, thumbnail: videoThumbnail});
+                    var videoView = new VideoView({model: video});
+                    $("#content").html(videoView.el);
+                    videoView.renderHotspots(video);
+                }
+            }});
+        }
+        else{
+            if (this.targetLink == null)
+                return;
+
+            var hotspotId = $(this.targetLink).attr("data-target-id");
+
+            if (!hotspotId || hotspotId == '')
+                return;
+
+            var hotspot = this.model.hotspots.get(hotspotId);
+            if (hotspot && hotspot.get("link") != videoFilename){
+                hotspot.set("link", videoFilename);
+                $(this.targetLink).val(videoFilename);
+            }
+        }
+
+        this.browseType = '';
+        this.targetLink = null;
+    },
+
     change: function (event) {
         // Remove any existing alert message
         utils.hideAlert();
@@ -278,7 +364,10 @@ window.VideoView = Backbone.View.extend({
         }
     },
 
-    beforeSave: function () {
+    beforeSave: function (event) {
+        if ($(event.currentTarget).hasClass('disabled'))
+            return false;
+
         var self = this;
         var check = this.model.validateAll();
         if (check.isValid === false) {

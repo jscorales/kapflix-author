@@ -2,12 +2,23 @@
     <div class="row">
         <div class="span8">
             <div class="video-player-section">
+
                 <div class="video-player-container">
-                    <video class="video-player">
+                    <% if (fileName == ''){ %>
+                        <div class="alert alert-block">
+                            You don't have any video selected, click on the plus image below or the load video button to select a video.
+                        </div>
+                    <% } %>
+                    <video class="video-player" style="display: <%= fileName == '' ? 'none;' : 'block;' %>">
                         <source src="videos/<%= fileName %>" type="video/mp4">
                     </video>
+                    <% if (fileName == ''){ %>
+                        <div class="video-player" style="background-color: #fff">
+                            <a href="#" class="add-video img-circle" title="Add Video"></a>
+                        </div>
+                    <% } %>
                 </div>
-                <div class="video-properties">
+                <div class="video-properties" style="display: <%= fileName == '' ? 'none;' : 'block;' %>">
                     <div class="video-properties-row">
                         <span class="video-name"></span>
                     </div>
@@ -23,8 +34,11 @@
         </div>
         <div class="span4">
             <div class="action-buttons">
-                <a href="#" class="btn btn-success btn-save"><i class="icon-film icon-white"></i><span>Save<span></a>
+                <a href="#" class="btn btn-primary btn-load-video"><i class="icon-plus icon-white"></i><span>Load Video<span></a>
+                <a href="#" class="btn btn-success btn-save <%= fileName == '' ? 'disabled' : '' %>"><i class="icon-film icon-white"></i><span>Save<span></a>
             </div>
+
+            <div class="alert action-buttons-alert" style="display: none;"></div>
 
             <div class="btn-group" style="display: none;">
               <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -72,14 +86,11 @@
         <div id="browseVideoModal" class="modal hide fade">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Browse Videos</h3>
+            <h3>Browse Video</h3>
           </div>
-          <div class="modal-body">
-            <p>Videos...</p>
-          </div>
+          <div class="modal-body"></div>
           <div class="modal-footer">
             <a href="javascript:void(0);" class="btn browse-cancel-btn">Cancel</a>
-            <a href="javascript:void(0);" class="btn btn-primary browse-ok-btn">OK</a>
           </div>
         </div>
     </div>

@@ -37,8 +37,8 @@ var BaseRouter = Backbone.Router.extend({
 var AppRouter = Backbone.Router.extend({
 
     routes: {
-        ""                  : "home",
-        "videos"          : "list",
+        ""                  : "videoDetails",
+        "videos"            : "videoDetails",
         "videos/page/:page" : "list",
         "videos/add"        : "addVideo",
         "videos/:id"        : "videoDetails",
@@ -117,7 +117,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     videoDetails: function (id) {
-        var video = new Video({_id: id});
+        var video = new Video({_id: id}); 
         video.fetch({success: function(){
             var videoView = new VideoView({model: video});
             $("#content").html(videoView.el);
