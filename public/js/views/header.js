@@ -18,24 +18,16 @@ window.HeaderView = Backbone.View.extend({
 
     events: {
         "click #loginButton": "login",
-        "click #signOut" : "signOut"
+        "click #signOut" : "signOut",
+        "click .dropdown": "selectMenuItem"
     },
 
     signOut: function(event){
-        debugger;
         this.$el.find("#loginForm").show();
         this.$el.find("#menu").hide();
         this.$el.find("#resources").hide();
         app.authenticated = false;
 
-    },
-    hideLogin: function(event){
-        alert("Rama");
-        debgger;
-        // if(App.authenticated)
-        //     this.$el.find("#loginForm").show();
-        // else
-        //     this.$el.find("#loginForm").hide();
     },
 
     login:function (event) {

@@ -7,7 +7,7 @@ var BaseRouter = Backbone.Router.extend({
       before: function(){},
       after: function(){},
       route : function(route, name, callback){
-        debugger;
+
           if (!_.isRegExp(route)) route = this._routeToRegExp(route);
           if (_.isFunction(name)) {
               callback = name;
@@ -113,7 +113,7 @@ var AppRouter = Backbone.Router.extend({
         videoList.fetch({success: function(){
             $("#content").html(new VideoListView({model: videoList, page: p}).el);
         }});
-        this.headerView.selectMenuItem('home-menu');
+        this.headerView.selectMenuItem('list-menu');
     },
 
     videoDetails: function (id) {
@@ -123,7 +123,7 @@ var AppRouter = Backbone.Router.extend({
             $("#content").html(videoView.el);
             videoView.renderHotspots(video);
         }});
-        this.headerView.selectMenuItem();
+        this.headerView.selectMenuItem('add-menu');
     },
 
   addVideo: function() {
