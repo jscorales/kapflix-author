@@ -4,19 +4,19 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('kapflixdb', server, {safe: true});
+var mongoUri = process.env.MONGOLAB_URI ||
+                process.env.MONGOHQ_URL ||
+                'mongodb://localhost:27017/kapflixdb';
 
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'kapflixdb' database");
-        db.collection('videos', {safe:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'videos' collection doesn't exist. Creating it with sample data...");
-                populateDB();
-            }
-        });
-    }
+mongo.Db.connect(mongoUri, {native_parser:true}, function(err, db) {  
+    db.collection('videos', {safe:true}, function(err, collection) {
+        if (err) {
+            console.log("The 'videos' collection doesn't exist. Creating it with sample data...");
+            populateDB(db);
+        }
+
+        db.close();
+    });
 });
 
 exports.findById = function(req, res) {
@@ -32,20 +32,24 @@ exports.findById = function(req, res) {
 
     if (_id == null){
         console.log('Retrieving video by filename: ' + id);
-        db.collection('videos', function(err, collection) {
-            collection.findOne({'fileName':(id + '.mp4')}, function(err, item) {
-                if (item == null)
-                    res.send(404);
-                else
-                    res.send(item);
+        mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+            db.collection('videos', {safe:true}, function(err, collection) {
+                collection.findOne({'fileName':(id + '.mp4')}, function(err, item) {
+                    if (item == null)
+                        res.send(404);
+                    else
+                        res.send(item);
+                });
             });
         });
     }
     else{
-        console.log('Retrieving video: ' + id);
-        db.collection('videos', function(err, collection) {
-            collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-                res.send(item);
+        mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+            console.log('Retrieving video: ' + id);
+            db.collection('videos', function(err, collection) {
+                collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+                    res.send(item);
+                });
             });
         });
     }
@@ -54,17 +58,21 @@ exports.findById = function(req, res) {
 exports.findByName = function(req, res) {
     var name = req.params.id;
     console.log('Retrieving video: ' + id);
-    db.collection('videos', function(err, collection) {
-        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-            res.send(item);
+    mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+        db.collection('videos', function(err, collection) {
+            collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+                res.send(item);
+            });
         });
     });
 };
 
 exports.findAll = function(req, res) {
-    db.collection('videos', function(err, collection) {
-        collection.find().toArray(function(err, items) {
-            res.send(items);
+    mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+        db.collection('videos', function(err, collection) {
+            collection.find().toArray(function(err, items) {
+                res.send(items);
+            });
         });
     });
 };
@@ -72,14 +80,16 @@ exports.findAll = function(req, res) {
 exports.addVideo = function(req, res) {
     var video = req.body;
     console.log('Adding video: ' + JSON.stringify(video));
-    db.collection('videos', function(err, collection) {
-        collection.insert(video, {safe:true}, function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred'});
-            } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);
-            }
+    mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+        db.collection('videos', function(err, collection) {
+            collection.insert(video, {safe:true}, function(err, result) {
+                if (err) {
+                    res.send({'error':'An error has occurred'});
+                } else {
+                    console.log('Success: ' + JSON.stringify(result[0]));
+                    res.send(result[0]);
+                }
+            });
         });
     });
 };
@@ -90,15 +100,18 @@ exports.updateVideo = function(req, res) {
     delete video._id;
     console.log('Updating video: ' + id);
     console.log(JSON.stringify(video));
-    db.collection('videos', function(err, collection) {
-        collection.update({'_id':new BSON.ObjectID(id)}, video, {safe:true}, function(err, result) {
-            if (err) {
-                console.log('Error updating video: ' + err);
-                res.send({'error':'An error has occurred'});
-            } else {
-                console.log('' + result + ' document(s) updated');
-                res.send(video);
-            }
+
+    mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+        db.collection('videos', function(err, collection) {
+            collection.update({'_id':new BSON.ObjectID(id)}, video, {safe:true}, function(err, result) {
+                if (err) {
+                    console.log('Error updating video: ' + err);
+                    res.send({'error':'An error has occurred'});
+                } else {
+                    console.log('' + result + ' document(s) updated');
+                    res.send(video);
+                }
+            });
         });
     });
 };
@@ -106,14 +119,16 @@ exports.updateVideo = function(req, res) {
 exports.deleteVideo = function(req, res) {
     var id = req.params.id;
     console.log('Deleting video: ' + id);
-    db.collection('videos', function(err, collection) {
-        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
-            if (err) {
-                res.send({'error':'An error has occurred - ' + err});
-            } else {
-                console.log('' + result + ' document(s) deleted');
-                res.send(req.body);
-            }
+    mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {  
+        db.collection('videos', function(err, collection) {
+            collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+                if (err) {
+                    res.send({'error':'An error has occurred - ' + err});
+                } else {
+                    console.log('' + result + ' document(s) deleted');
+                    res.send(req.body);
+                }
+            });
         });
     });
 };
@@ -121,7 +136,7 @@ exports.deleteVideo = function(req, res) {
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
 // You'd typically not find this code in a real-life app, since the database would already exist.
-var populateDB = function() {
+var populateDB = function(db) {
 
     var videos = [
     {
