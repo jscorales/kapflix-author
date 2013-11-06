@@ -90,9 +90,10 @@ window.SessionModel = Backbone.Model.extend({
                 },
 
                 login : function(credentials){
+                    debugger;
                         var that = this;
                         var login = $.ajax({
-                                url : this.url + '/login',
+                                url : this.url + '/session/login',
                                 data : credentials,
                                 type : 'POST'
                         });
@@ -115,7 +116,7 @@ window.SessionModel = Backbone.Model.extend({
                 logout : function(callback){
                         var that = this;
                         $.ajax({
-                                url : this.url + '/logout',
+                                url : this.url + '/session/logout',
                                 type : 'DELETE'
                         }).done(function(response){
                                 //Clear all session data
