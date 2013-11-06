@@ -15,7 +15,7 @@ app.configure(function () {
     app.use(express.cookieParser('NOTHING'));
     app.use(express.session());
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use(express.csrf());
+    // app.use(express.csrf());
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(function(req, res, next){
@@ -23,93 +23,6 @@ app.configure(function () {
             next();
     });
 });
-
-app.get("/", function(req, res){
-        //send and csrf token with frist request
-        //and assign it to a global csrf variable
-        //inside the template
-        res.render('index', {
-                csrf : req.session._csrf
-        });
-});
-
-app.get("/session", function(req, res){
-        //Check for authentication
-        if(req.session.user){
-                res.send(200, {
-                        auth : true,
-                        user : req.session.user
-                });
-        }else{
-                res.send(401, {
-                        auth : false,
-                        csrf : req.session._csrf
-                });
-        }
-});
-
-app.post("/session/login", function(req, res){
-        var email = req.body.email;
-        var password = req.body.password;
-        return res.send(200, {
-                                auth : true,
-                                user : user
-                        });
-        //TODO:
-
-        // for (var i = 0; i < Users.length; i++) {
-        //         var user = Users[i];
-        //         if(user.email == 'test' && user.password == 'test'){
-        //                 req.session.user = user;
-        //                 return res.send(200, {
-        //                         auth : true,
-        //                         user : user
-        //                 });
-        //         }
-        // };
-        // return res.send(401);
-});
-
-app.del("/session/logout", function(req, res){
-        //Sending new csrf to client when user logged out
-        //for next user to sign in without refreshing the page
-        req.session.user = null;
-        req.session._csrf = uid(24);
-
-        res.send(200, {
-                csrf : req.session._csrf
-        });
-});
-
-app.get('/users/:id', Auth, function(req, res){
-        //Using the Auth filter for this route
-        //to check for authentication before sending data
-        var id = req.params.id;
-
-        for (var i = 0; i < Users.length; i++) {
-                if(id == Users[i].id){
-                        return res.send(Users[i]);
-                }
-        };
-        return res.send(400);
-});
-
-/* ------------------------------------------------
-        Route Filters
-   ------------------------------------------------*/
-
-//Authentication Filter
-function Auth (req, res, next) {
-        if(req.session.user){
-                next();
-        }else{
-                res.send(401,{
-                        flash : 'Plase log in first'
-                });
-        }
-}
-
-
 
 app.get("/", function(req, res){
         //send and csrf token with frist request
