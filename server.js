@@ -8,7 +8,7 @@ var express = require('express'),
 var app = express();
 
 app.configure(function () {
-    app.set('port', 3000);
+    app.set('port', process.env.PORT || 3000);
     app.set('library_path', '/Users/jcorales/projects/kapflix')
     app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
     app.use(express.bodyParser());
