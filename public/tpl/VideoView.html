@@ -1,6 +1,12 @@
 <div class="row-fluid">
     <div class="row video-editor-header">
-        <div class="video-directory pull-left">/public/videos/<%= fileName %></div>
+        <% if (fileName == ''){ %>
+            <div class="alert alert-block pull-left">
+                You don't have any video selected, click on the plus image below or the add new video button to select a video.
+            </div>
+        <% } else {%>
+            <div class="video-directory pull-left">/public/videos/<%= fileName %></div>
+        <% }%>
         <a href="#" class="btn btn-success btn-load-video pull-right"><span>ADD NEW VIDEO<span></a>
     </div>
     <div class="row video-editor-container">
@@ -11,11 +17,7 @@
             <div class="video-player-section">
 
                 <div class="video-player-container">
-                    <% if (fileName == ''){ %>
-                        <div class="alert alert-block">
-                            You don't have any video selected, click on the plus image below or the load video button to select a video.
-                        </div>
-                    <% } %>
+                    
                     <video class="video-player" style="display: <%= fileName == '' ? 'none;' : 'block;' %>">
                         <source src="videos/<%= fileName %>" type="video/mp4">
                     </video>
