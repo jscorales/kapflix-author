@@ -5,6 +5,7 @@ var express = require('express'),
     library = require('./routes/library'),
     uid = require('uid2');
 
+
 var app = express();
 
 app.configure(function () {
@@ -118,9 +119,11 @@ app.post('/videos', video.addVideo);
 app.put('/videos/:id', video.updateVideo);
 app.delete('/videos/:id', video.deleteVideo);
 
-app.get('/xml/:id', function(req, res){
-    res.sendfile('public/xml/question1.xml');
-});
+app.get('/xml/:id', video.getVideoXml);
+
+// app.get('/xml/:id', function(req, res){
+//     res.sendfile('public/xml/question1.xml');
+// });
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
