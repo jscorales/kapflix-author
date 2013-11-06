@@ -1,3 +1,29 @@
+.kapflix body{
+    background-color: #f6f6f6;
+}
+
+.kapflix .video-editor-header{
+    margin-bottom: 10px;
+}
+
+.kapflix .video-directory{
+    font-weight: bold;
+    color: #666666;
+    font-size: 20px;
+    padding-top: 4px;
+}
+
+.kapflix .btn-load-video{
+
+}
+
+.kapflix .video-editor-container{
+    border: 1px solid #e1e1e1;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 20px 0 0 8px;
+}
+
 .brand {
     font-family: 'Arvo';
 }
@@ -181,7 +207,7 @@ legend {
     background-color: #000;
 }
 
-.video-player-container{
+.video-player-label-container, .video-player-container{
     margin: 0 auto;
 }
 
@@ -189,6 +215,15 @@ legend {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.video-player-label-container{
+    width: 640px;
+}
+
+.video-player-label-container input{
+    font-size: 18px;
+    padding: 6px;
 }
 
 .video-player-container, .video-annotations, .video-player{
@@ -251,7 +286,7 @@ input.hotspot-name{
 }
 
 .kapflix .form-coordinates input{
-    width: 46px;
+    width: 44px;
     margin-right: 10px;
 }
 
@@ -277,7 +312,7 @@ input.hotspot-name{
 }
 
 .kapflix .time-picker .input-small{
-    width: 117px;
+    width: 108px;
 }
 
 .kapflix .spinner-buttons{
@@ -565,4 +600,14 @@ input.hotspot-name{
 
 .kapflix .action-buttons-alert{
     margin-top: 10px;
+}
+
+@media (min-width: 1200px){
+    .container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+        width: 1024px;
+    }
+}
+
+.row-fluid .span4 {
+    margin-left: 0;
 }

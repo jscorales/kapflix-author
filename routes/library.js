@@ -15,6 +15,7 @@ exports.browse = function(req, res, appDir){
 	});
 };
 
+
 var processFiles = function(req, res, appDir, files){
 	var videos = [];
 

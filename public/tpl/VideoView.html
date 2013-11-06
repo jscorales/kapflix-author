@@ -1,6 +1,13 @@
 <div class="row-fluid">
-    <div class="row">
+    <div class="row video-editor-header">
+        <div class="video-directory pull-left">/public/videos/<%= fileName %></div>
+        <a href="#" class="btn btn-success btn-load-video pull-right"><span>ADD NEW VIDEO<span></a>
+    </div>
+    <div class="row video-editor-container">
         <div class="span8">
+            <div class="video-player-label-container">
+                <input type="text" value="Sample Question" class="input-xxlarge"/>
+            </div>
             <div class="video-player-section">
 
                 <div class="video-player-container">
@@ -34,7 +41,6 @@
         </div>
         <div class="span4">
             <div class="action-buttons">
-                <a href="#" class="btn btn-primary btn-load-video"><i class="icon-plus icon-white"></i><span>Load Video<span></a>
                 <a href="#" class="btn btn-success btn-save <%= fileName == '' ? 'disabled' : '' %>"><i class="icon-film icon-white"></i><span>Save<span></a>
             </div>
 
