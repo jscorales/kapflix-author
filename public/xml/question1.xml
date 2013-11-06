@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kapflix video-filename="question1.mp4">
+    <hotspots>
+        <hotspot id="hotspot-1" name="hotspot-12">
+            <coordinates top="202" left="68.5" height="38" width="149"/>
+            <link href="question1-choice-a.mp4"/>
+            <duration start="00:00:00" end="00:00:00"/>
+        </hotspot>
+        <hotspot id="hotspot-2" name="hotspot-12">
+            <coordinates top="244" left="67.84375" height="38" width="150"/>
+            <link href="question1-choice-b.mp4"/>
+            <duration start="00:00:00" end="00:00:00"/>
+        </hotspot>
+        <hotspot id="hotspot-3" name="hotspot-12">
+            <coordinates top="288" left="66.84375" height="45" width="151"/>
+            <link href="question1-choice-c.mp4"/>
+            <duration start="00:00:00" end="00:00:00"/>
+        </hotspot>
+        <hotspot id="hotspot-4" name="hotspot-12">
+            <coordinates top="171" left="352.84375" height="98" width="81"/>
+            <link href="question1-hint.mp4"/>
+            <duration start="00:00:38" end="00:00:00"/>
+        </hotspot>
+    </hotspots>
+</kapflix>

@@ -22,8 +22,8 @@
                         <source src="videos/<%= fileName %>" type="video/mp4">
                     </video>
                     <% if (fileName == ''){ %>
-                        <div class="video-player" style="background-color: #fff">
-                            <a href="#" class="add-video img-circle" title="Add Video"></a>
+                        <div class="video-player" style="background-color: #e3e3e3; border-color: #e3e3e3;">
+                            <a href="#" class="add-video" title="Add Video"></a>
                         </div>
                     <% } %>
                 </div>
@@ -43,7 +43,8 @@
         </div>
         <div class="span4">
             <div class="action-buttons">
-                <a href="#" class="btn btn-success btn-save <%= fileName == '' ? 'disabled' : '' %>"><i class="icon-film icon-white"></i><span>Save<span></a>
+                <a href="#" class="btn btn-save-template <%= fileName == '' ? 'disabled' : '' %>"><span>Save as Template<span></a>
+                <a href="#" class="btn btn-success btn-save pull-right<%= fileName == '' ? 'disabled' : '' %>"><i class="icon-film icon-white"></i><span>Save<span></a>
             </div>
 
             <div class="alert action-buttons-alert" style="display: none;"></div>
@@ -63,9 +64,9 @@
               </ul>
             </div>
 
-            <div class="navbar hotspots-navbar">
+            <div class="navbar hotspots-navbar <%= fileName == '' ? 'disabled' : '' %>">
                 <div class="navbar-inner navbar-flag">
-                    <a class="brand" href="#">Add Hotspot</a>
+                    <a class="brand" href="javascript:void(0)">Add Hotspot</a>
                     <ul class="nav">
                         <li class="divider-vertical">
                             <a href="#" title="Rectangular" class="add-hotspot hotspot-rectangular" data-hotspot-shape="rectangular">

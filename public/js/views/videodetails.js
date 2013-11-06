@@ -29,6 +29,8 @@ window.VideoView = Backbone.View.extend({
             this.renderHotspotList();
         }
 
+        this.initDragResize();
+
         return this;
     },
 
@@ -55,6 +57,8 @@ window.VideoView = Backbone.View.extend({
             var html = utils.createHotspotHtml($(".video-player-container", this.el), hotspots[i]);
             $(".video-player-container", this.el).append(html);
         }
+
+        utils.ensureDragDropContainmentArea();
     },
 
     renderHotspotList: function(){
@@ -91,6 +95,7 @@ window.VideoView = Backbone.View.extend({
         "click  a.thumbnail"            : "videoSelected",
         "click .link-browse"            : "browseLink",
         "click .btn-save"               : "beforeSave",
+        "click .btn-save-template"      : "saveTemplate",
         "click .delete"                 : "deleteVideo",
         "drop #picture"                 : "dropHandler"
     },
@@ -114,6 +119,9 @@ window.VideoView = Backbone.View.extend({
     },
 
     addHotspotMouseDown: function(event){
+        if ($(event.currentTarget).parents('.navbar').hasClass("disabled"))
+            return;
+
         $("li.divider-vertical").removeClass("active");
         $(event.currentTarget).parent().addClass("active");
     },
@@ -124,6 +132,9 @@ window.VideoView = Backbone.View.extend({
 
     addHotspot: function(event){
         event.preventDefault();
+
+        if ($(event.currentTarget).parents('.navbar').hasClass("disabled"))
+            return;
 
         utils.ensureDragDropContainmentArea();
 
@@ -393,6 +404,10 @@ window.VideoView = Backbone.View.extend({
         });
     },
 
+    saveTemplate: function(event){
+        event.preventDefault();
+    },
+
     deleteVideo: function () {
         this.model.destroy({
             success: function () {
@@ -416,6 +431,30 @@ window.VideoView = Backbone.View.extend({
             $('#picture').attr('src', reader.result);
         };
         reader.readAsDataURL(this.pictureFile);
+    },
+
+    initDragResize: function(){
+        window.dragresize = new DragResize('dragresize',
+         { minWidth: 10, minHeight: 10, minLeft: 0, minTop: 0, maxLeft: 600, maxTop: 320 });
+
+        window.dragresize.isElement = function(elm)
+        {
+            if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
+        };
+        window.dragresize.isHandle = function(elm)
+        {
+            if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
+        };
+
+        window.dragresize.ondragfocus = function() { };
+        window.dragresize.ondragstart = function(isResize) { };
+        window.dragresize.ondragmove = function(isResize) { };
+        window.dragresize.ondragend = function(isResize) { };
+        window.dragresize.ondragblur = function() { 
+            $('.hotspot-detail').removeClass('active');
+        };
+
+        window.dragresize.apply(document);
     }
 
 });

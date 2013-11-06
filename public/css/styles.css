@@ -180,20 +180,24 @@ legend {
     text-indent: -10000px;
     overflow: hidden;
     display: block;
-    height: 22px;
-    width: 22px;
+    height: 24px;
+    width: 24px;
 }
 
 .kapflix .hotspot-rectangular span{
-    background-position: 0 0;
+    background-position: -6px -2px;
 }
 
 .kapflix .hotspot-elliptical span{
-    background-position: -38px 0;
+    background-position: -46px -1px;
 }
 
 .kapflix .hotspot-irregular span{
-    background-position: -80px 0;
+    background-position: -88px -2px;
+}
+
+.kapflix .icon-folder-open{
+    background: url('/img/add-video.png');
 }
 
 .kapflix .divider-vertical{
@@ -241,10 +245,23 @@ legend {
     border: 2px solid #fff;
 }
 
-.navbar-flag .brand{
+.kapflix .navbar.disabled{
+    opacity: 0.65;
+}
+
+.kapflix .navbar.disabled .navbar-inner{
+    background-image: none;
+}
+
+.kapflix .navbar.disabled .add-hotspot{
+    cursor: default;
+}
+
+.kapflix .navbar-flag .brand{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     font-weight: bold;
+    cursor: default;
 }
 
 .hotspot-detail-header{
@@ -317,7 +334,7 @@ input.hotspot-name{
 }
 
 .kapflix .time-picker .input-small{
-    width: 108px;
+    width: 107px;
 }
 
 .kapflix .spinner-buttons{
@@ -583,11 +600,11 @@ input.hotspot-name{
 
 .kapflix .add-video{
     display: block;
-    height: 145px;
+    height: 150px;
     width: 145px;
     margin: 95px auto;
     opacity: 0.7;
-    background: url('/img/big-plus.png') no-repeat -145px 1px;
+    background: url('/img/big-plus.png') no-repeat 0 0;
 }
 
 .kapflix .modal-body .thumbnail{

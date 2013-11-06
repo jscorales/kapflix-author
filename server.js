@@ -205,6 +205,10 @@ app.post('/videos', video.addVideo);
 app.put('/videos/:id', video.updateVideo);
 app.delete('/videos/:id', video.deleteVideo);
 
+app.get('/xml/:id', function(req, res){
+    res.sendfile('public/xml/question1.xml');
+});
+
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });

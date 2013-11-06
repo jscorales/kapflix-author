@@ -86,25 +86,7 @@
 <script src="js/views/about.js"></script>
 <script src="js/main.js"></script>
 <script type="text/javascript">
-    var dragresize = new DragResize('dragresize',
-     { minWidth: 10, minHeight: 10, minLeft: 0, minTop: 0, maxLeft: 600, maxTop: 320 });
-
-    dragresize.isElement = function(elm)
-    {
-        if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
-    };
-    dragresize.isHandle = function(elm)
-    {
-        if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
-    };
-
-    dragresize.ondragfocus = function() { };
-    dragresize.ondragstart = function(isResize) { };
-    dragresize.ondragmove = function(isResize) { };
-    dragresize.ondragend = function(isResize) { };
-    dragresize.ondragblur = function() { };
-
-    dragresize.apply(document);
+    
 </script>
 </body>
 </html>
