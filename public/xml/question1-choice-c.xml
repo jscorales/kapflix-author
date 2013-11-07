@@ -18,7 +18,7 @@
         </hotspot>
         <hotspot id="hotspot-4" name="hotspot-4">
             <coordinates top="173" left="367.34375" height="76" width="141"/>
-            <link href="question1-hint.mp4"/>
+            <link href="home"/>
             <duration start="00:00:30" end="00:00:00"/>
         </hotspot>
     </hotspots>
