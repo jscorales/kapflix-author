@@ -119,6 +119,13 @@ app.post('/videos', video.addVideo);
 app.put('/videos/:id', video.updateVideo);
 app.delete('/videos/:id', video.deleteVideo);
 
+
+app.get('/stubxml/:id', function(req, res){
+    var id = req.params.id;
+    var fileName = (id || "question1") + '.xml';
+    res.sendfile('public/xml/' + fileName);
+});
+
 app.get('/xml/:id', video.getVideoXml);
 
 // app.get('/xml/:id', function(req, res){
