@@ -119,7 +119,9 @@ app.put('/videos/:id', video.updateVideo);
 app.delete('/videos/:id', video.deleteVideo);
 
 app.get('/xml/:id', function(req, res){
-    res.sendfile('public/xml/question1.xml');
+    var id = req.params.id;
+    var fileName = (id || "question1") + '.xml';
+    res.sendfile('public/xml/' + fileName);
 });
 
 http.createServer(app).listen(app.get('port'), function () {
