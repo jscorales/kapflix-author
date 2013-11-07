@@ -57,6 +57,7 @@ exports.findById = function(req, res) {
 };
 
 exports.getVideoXml = function(req,res){
+    res.contentType('application/xml');
     var id = req.params.id;
     var _id = null;
 
@@ -68,21 +69,25 @@ exports.getVideoXml = function(req,res){
     }
 
     if (_id == null){
-        console.log('Retrieving video xml by filename: ' + id);
-        db.collection('videos', function(err, collection) {
-            collection.findOne({'fileName':(id + '.mp4')}, function(err, item) {
-                if (item == null)
-                    res.send(404);
-                else
-                    res.send(createVideoXml(item));
+        console.log('Retrieving video by filename: ' + id);
+        mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {
+            db.collection('videos', {safe:true}, function(err, collection) {
+                collection.findOne({'fileName':(id + '.mp4')}, function(err, item) {
+                    if (item == null)
+                        res.send(404);
+                    else
+                        res.send(createVideoXml(item));
+                });
             });
         });
     }
     else{
-        console.log('Retrieving video: ' + id);
-        db.collection('videos', function(err, collection) {
-            collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-                res.send(createVideoXml(tem));
+        mongo.Db.connect(mongoUri, {safe:true,native_parser:true}, function(err, db) {
+            console.log('Retrieving video: ' + id);
+            db.collection('videos', function(err, collection) {
+                collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+                    res.send(createVideoXml(item));
+                });
             });
         });
     }
