@@ -105,8 +105,8 @@ var createVideoXml = function(item){
 
                 var hotspotItem = item.hotspots[i];
                 var hotspot = hotspots.ele('hotspot',
-                    {'id':hotspotItem.id, 'name':hotspotItem.name})
-                .ele('coordinates',{'top':hotspotItem.top, 'left':hotspotItem.left, 'height':hotspotItem.height,'width':hotspotItem.width});
+                    {'id':hotspotItem.id, 'name':hotspotItem.name});
+                hotspot.ele('coordinates',{'top':hotspotItem.top, 'left':hotspotItem.left, 'height':hotspotItem.height,'width':hotspotItem.width});
                 hotspot.ele('link',{'href':hotspotItem.link});
                 hotspot.ele('duration',{'start':hotspotItem.startTime,'end':hotspotItem.endTime});
             }
