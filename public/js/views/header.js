@@ -27,6 +27,7 @@ window.HeaderView = Backbone.View.extend({
         this.$el.find("#menu").hide();
         this.$el.find("#resources").hide();
         app.authenticated = false;
+        window.location.replace('#');
 
     },
 
