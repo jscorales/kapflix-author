@@ -7,13 +7,15 @@
                 <span class="icon-bar"></span>
             </a>
           <!--   <img class="about-icon" src="img/KapflixIcon.png" width="50" style="float: left;"> -->
-            <a class="brand" href="#">KapFlix Author</a>
+            <a class="brand brand-home" href="#">KapFlix Author</a>
 
             <div class="nav-collapse collapse">
 
                 <ul class="nav" id="menu" style="display:none;">
-                    <!-- <li class="list-menu"><a href="#videos">Browse Videos</a></li> -->
-                    <li class="add-menu"><a href="#videos/add"><i class="icon-edit icon-white"></i> Add Video</a></li>
+                    <!-- 
+                    <li class="list-menu"><a href="#videos">Browse Videos</a></li> 
+                    -->
+                    <li class="add-menu"><a href="#videos/add"><i class="icon-edit icon-white"></i> Start Authoring</a></li>
                 </ul>
 
                 <form class="navbar-form pull-right" id="loginForm">
@@ -23,16 +25,13 @@
                 </form>
 
                 <ul class="nav pull-right" id="resources" style="display:none;">
-                    <li class="about-menu"><a href="#about">About</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#" >Contact Us</a></li>
-                            <li><a href="#" >Author's Blog</a></li>
-                            <li><a id="signOut">Sign Out</a></li>
-                        </ul>
-                    </li>
+                    <!--<li class="about-menu"><a href="#about">About</a></li>-->
+                    <button class="btn btn-success dropdown-toggle profile-dropdown" data-toggle="dropdown"><i class="icon-user icon-white"></i><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">View Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="signOut">Sign Out</a></li>
+                    </ul>
                 </ul>
             </div>
             <!--/.nav-collapse -->

@@ -31,6 +31,8 @@ window.VideoView = Backbone.View.extend({
 
         this.initDragResize();
 
+        $("#menu").hide();
+
         return this;
     },
 
@@ -178,6 +180,7 @@ window.VideoView = Backbone.View.extend({
             this.model.hotspots.remove(hotspot);
 
         $("#" + hotspotId).remove();
+        $(event.currentTarget).parents('.hotspot-detail').remove();
 
         return false;
     },

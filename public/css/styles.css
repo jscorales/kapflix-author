@@ -633,3 +633,12 @@ input.hotspot-name{
 .row-fluid .span4 {
     margin-left: 0;
 }
+
+.kapflix .nav .profile-dropdown .caret{
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+}
+
+.kapflix .profile-dropdown .caret{
+    margin-left: 6px;
+}

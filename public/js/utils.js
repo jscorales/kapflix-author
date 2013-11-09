@@ -135,5 +135,19 @@ window.utils = {
         var m=Math.floor(seconds/60)<10?"0"+Math.floor(seconds/60):Math.floor(seconds/60);
         var s=Math.floor(seconds-(m*60))<10?"0"+Math.floor(seconds-(m*60)):Math.floor(seconds-(m*60));
         return m+":"+s;
+    },
+
+    setSessionProperty: function(key, value){
+        if (sessionStorage)
+            sessionStorage.setItem(key, value);
+    },
+
+    getSessionProperty: function(key){
+        if (sessionStorage)
+            return sessionStorage.getItem(key);
+
+        return null;
     }
+
+
 };

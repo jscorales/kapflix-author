@@ -97,6 +97,18 @@ var AppRouter = Backbone.Router.extend({
     initialize: function () {
         this.headerView = new HeaderView();
         $('.header').html(this.headerView.el);
+
+        var isAuthenticated = utils.getSessionProperty('isAuthenticated');
+        if (isAuthenticated != null && isAuthenticated == 'true'){
+          $('#loginForm').hide();
+          $('#resources').show();
+          $('#menu').show();
+        }
+        else{
+          $('#loginForm').show();
+          $('#resources').hide();
+          $('menu').hide();
+        }
     },
 
     home: function (id) {

@@ -1,7 +1,8 @@
 window.HeaderView = Backbone.View.extend({
 
     initialize: function () {
-        this.render();
+        //if (!app.authenticated)
+            this.render();
     },
 
     render: function () {
@@ -12,21 +13,33 @@ window.HeaderView = Backbone.View.extend({
     selectMenuItem: function (menuItem) {
         $('.nav li').removeClass('active');
         if (menuItem) {
-            $('.' + menuItem).addClass('active');
+            $('.brand-home' + menuItem).addClass('active');
         }
     },
 
     events: {
+        "click .brand"      : "goHome",
         "click #loginButton": "login",
         "click #signOut" : "signOut",
         "click .dropdown": "selectMenuItem"
     },
 
+    goHome: function(event){
+        event.preventDefault();
+
+        window.location.replace('/');
+    },
+
     signOut: function(event){
+        event.preventDefault();
+
         this.$el.find("#loginForm").show();
         this.$el.find("#menu").hide();
         this.$el.find("#resources").hide();
         app.authenticated = false;
+
+        utils.setSessionProperty('isAuthenticated', 'false');
+
         window.location.replace('#');
 
     },
@@ -45,6 +58,8 @@ window.HeaderView = Backbone.View.extend({
             this.$el.find("#menu").hide();
             this.$el.find("#resources").hide();
         }
+
+        utils.setSessionProperty('isAuthenticated', 'true');
 
         window.location.replace('#videos');
 
